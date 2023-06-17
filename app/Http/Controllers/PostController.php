@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -23,7 +24,7 @@ class PostController extends Controller
      */
     public function store()
     {
-        return 'store';
+        return Post::factory()->count(1000)->create();
     }
 
     public function storeCache()

@@ -19,7 +19,7 @@ class PostController extends Controller
     {
 
         $data = Redis::get('posts');
-        
+
         if (!$data) {
             $data = Post::all();
             Redis::set('posts', $data, 'EX', 36000);
@@ -38,7 +38,11 @@ class PostController extends Controller
 
     public function storeCache()
     {
-        return 'storeCache';
+        
+        $data = Post::all();
+        Redis::set('posts', $data, 'EX', 36000);
+
+        return $data;
     }
 
 }

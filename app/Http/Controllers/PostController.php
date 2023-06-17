@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Redis;
 
 class PostController extends Controller
 {
@@ -16,7 +17,15 @@ class PostController extends Controller
 
     public function indexCache()
     {
-        return 'indexCache';
+
+        $data = Redis::get('posts');
+        
+        if (!$data) {
+            $data = Post::all();
+            Redis::set('posts', $data, 'EX', 36000);
+        }
+        return $data;
+
     }
 
     /**
